@@ -25,11 +25,11 @@
 5. Controller Module
    - `DataBase` class provides APIs to access and manipulate files.
    - `Authentication` class to provide logging in and registering, extends `DataBase`.
-   - `DBTable` class to help set up tables (files), also extends `DataBase.
+   - `DBTable` class to help set up tables (files), also extends `DataBase`.
    - `DateTime` class provides useful methods related to time and date.
    - `ArrayString` class
 
-### You can download and run it. It supports Windows OS. [Download Project Management System App](https://github.com/AhmedMaherElSaeidi/Project-Management-System/blob/main/assets/App.rar)
+### You can download and run it. It supports Windows OS. [Download App](https://github.com/AhmedMaherElSaeidi/Project-Management-System/blob/main/assets/App.rar)
 
 ### Overview of the app.
 ![Example Image](assets/Images/GUI_MAP_1.jpg)
