@@ -1,0 +1,4 @@
+User ID	Date	Penality
+1005	20 Jun 2023	700
+1005	20 Jun 2023	900
+1003	22 Jun 2023	50000

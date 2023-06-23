@@ -1,0 +1,14 @@
+ID	FullName	Role	Salary
+1000	Hussein ElHusseini	Employee	8200
+1002	maher	Employee	9600
+1003	hika	Employee	5400
+1004	zyad awad	Employee	10000
+1005	malak	TeamLeader	8000
+1006	sohaila	Manager	7500
+1007	venom	Manager	7700
+1008	antasia	Manager	7700
+1009	marvel	Manager	9000
+1010	ahri	TeamLeader	9700
+1011	caitlyn	TeamLeader	9500
+1032	Nasr	Employee	8526
+145783	Bahaa	Manager	7852
