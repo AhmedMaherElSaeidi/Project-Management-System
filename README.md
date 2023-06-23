@@ -29,7 +29,7 @@
    - `DateTime` class provides useful methods related to time and date.
    - `ArrayString` class
 
-### You can download and run it. It supports Windows OS. [Download App](https://github.com/AhmedMaherElSaeidi/Project-Management-System/blob/main/assets/App.rar)
+### You can download and run it. It supports Windows OS. [Download App](https://raw.githubusercontent.com/AhmedMaherElSaeidi/Project-Management-System/main/assets/App.rar?token=GHSAT0AAAAAACD6ZU7PGTODJB3DXCIPOE6OZEV6K7Q)
 
 ### Overview of the app.
 ![Example Image](assets/Images/GUI_MAP_1.jpg)
