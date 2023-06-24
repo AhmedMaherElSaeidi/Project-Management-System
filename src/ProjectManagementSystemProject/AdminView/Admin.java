@@ -1,5 +1,6 @@
 package ProjectManagementSystemProject.AdminView;
 
+import ProjectManagementSystemProject.Controller.ArrayString;
 import ProjectManagementSystemProject.Controller.DataBase;
 import ProjectManagementSystemProject.LogIn;
 import ProjectManagementSystemProject.ProjectManagementSystemProject;
@@ -11,6 +12,7 @@ public class Admin extends javax.swing.JFrame {
 
     public static String id = "";
     public static String role = "";
+    public final String seperator = " - ";
     public static String[] userFeatures;
 
     private static DataBase db;
@@ -21,6 +23,12 @@ public class Admin extends javax.swing.JFrame {
 
         try {
             db = new DataBase(new File(this.path));
+            String[] users = db.readLines();
+
+            for (String user : users) {
+                String[] fields = db.toFields(user);
+                jComboBoxUsers.addItem(fields[0] + seperator + fields[1]);
+            }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -38,7 +46,6 @@ public class Admin extends javax.swing.JFrame {
         add_user = new javax.swing.JButton();
         delete_user = new javax.swing.JButton();
         view_projects = new javax.swing.JButton();
-        id_text = new javax.swing.JTextField();
         update_user = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         exit_btn = new javax.swing.JButton();
@@ -47,6 +54,7 @@ public class Admin extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        jComboBoxUsers = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Admin Controller");
@@ -100,7 +108,7 @@ public class Admin extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("ID");
+        jLabel3.setText("Users");
 
         logout.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         logout.setForeground(new java.awt.Color(0, 153, 51));
@@ -122,7 +130,7 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(id_text, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBoxUsers, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator3)
                     .addComponent(jSeparator2)
@@ -148,7 +156,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(id_text))
+                    .addComponent(jComboBoxUsers))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(update_user, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,19 +184,20 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_exit_btnActionPerformed
 
     private void delete_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_userActionPerformed
-        id = id_text.getText();
+        id = jComboBoxUsers.getSelectedItem().toString().split(seperator)[0];
+
+        if (!ArrayString.isDigit(id)) {
+            JOptionPane.showMessageDialog(null, "Please make sure you have selected a user.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         try {
             String[] user = db.getRecordWhere(0, id);
 
-            if (user != null) {
-                role = db.toFields(user[0])[2];
+            role = db.toFields(user[0])[2];
 
-                AdminDeletingUser deleteUser = new AdminDeletingUser();
-                deleteUser.show();
-            } else {
-                JOptionPane.showMessageDialog(null, "The user may not be recorded\nPlease make sure you have entered a valid ID", "Warning", JOptionPane.WARNING_MESSAGE);
-            }
+            AdminDeletingUser deleteUser = new AdminDeletingUser();
+            deleteUser.show();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -201,22 +210,22 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_add_userActionPerformed
 
     private void update_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_userActionPerformed
-        id = id_text.getText();
+        id = jComboBoxUsers.getSelectedItem().toString().split(seperator)[0];
 
+        if (!ArrayString.isDigit(id)) {
+            JOptionPane.showMessageDialog(null, "Please make sure you have selected a user.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
             String[] user = db.getRecordWhere(0, id);
 
-            if (user != null) {
-                userFeatures = db.toFields(user[0]);
-                role = userFeatures[2];
+            userFeatures = db.toFields(user[0]);
+            role = userFeatures[2];
 
-                AdminUpdateUser update = new AdminUpdateUser(userFeatures[0], userFeatures[1], userFeatures[2], userFeatures[3]);
-                update.show();
+            AdminUpdateUser update = new AdminUpdateUser(userFeatures[0], userFeatures[1], userFeatures[2], userFeatures[3]);
+            update.show();
 
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Couldn't find User " + id + "\nPlease make sure you have entered a valid ID", "Warning", JOptionPane.WARNING_MESSAGE);
-            }
+            this.dispose();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -274,7 +283,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton add_user;
     private javax.swing.JButton delete_user;
     private javax.swing.JButton exit_btn;
-    private javax.swing.JTextField id_text;
+    private javax.swing.JComboBox<String> jComboBoxUsers;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator2;
